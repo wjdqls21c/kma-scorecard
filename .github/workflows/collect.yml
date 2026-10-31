@@ -1,5 +1,10 @@
 name: Collect KMA snapshots
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/collect.yml"
+      - "collector/**"
   schedule:
     - cron: '50 * * * *'
   workflow_dispatch:
@@ -45,3 +50,4 @@ jobs:
         run: |
           echo "::error::Collection incomplete. Check key approval, quota and KMA availability. Successful snapshots were retained."
           exit 1
+
