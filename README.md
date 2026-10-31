@@ -1,6 +1,6 @@
 # 기상청 성적표 v0.1.1
 
-2026-11-01 개발. 독립 예보 검증 프로젝트. 개발자의 API 활용신청은 승인되었습니다. 이 저장소의 `KMA_SERVICE_KEY` Secret 등록과 첫 실행 검증이 남아 있으므로 **실제 성적이나 자동 수집이 활성화됐다고 간주하면 안 됩니다.**
+2026-11-01 개발. 독립 예보 검증 프로젝트. 개발자의 API 활용신청은 승인되었습니다. 인증키 Secret 등록 후 2026-11-01 06:16 KST 첫 실수집이 성공했습니다(예보 222행, 관측 18행, 수집 오류 0). **24시간 리드 평가 표본은 대상 시각이 지나야 생기며, 시간 구간 정합성 등 평가 방법 검증은 아직 남아 있습니다.**
 
 ## 구현 결과
 
@@ -22,7 +22,7 @@
    - https://www.data.go.kr/data/15058629/openapi.do
 3. ASOS는 긴 관측 이력이 있으나 격자와 지점 매칭이 필요하고 겨울철 강수 제공 간격에도 주의해야 한다. 첫 비교는 같은 격자의 초단기실황을 사용하되 독립 ASOS 검증과 동일하지 않다. 인증 후 실황의 RN1 시간 구간을 예보 POP 대상 구간과 대조해야 한다. 검증 전에는 강수 점수를 실험값으로 취급한다.
    - https://data.kma.go.kr/data/grnd/selectAsosRltmList.do
-4. 무료 운영 후보는 GitHub Pages + 공개 저장소의 표준 GitHub Actions 실행기. 매시 50분 수집, API 키는 서버 Secret. 현재 Sites 주소는 개발자가 확인하는 비공개 테스트 배포로, 일반 대중 대상 출시 주소가 아니다. GitHub 계정 연결/공개 저장소 생성은 아직 하지 않았다. GitHub Pages는 실제 상거래 사이트 운영에 제한이 있으므로 광고·결제 도입 전 약관을 다시 검토하고 Cloudflare Workers 무료 플랜 등으로 이전한다.
+4. 무료 운영 후보는 GitHub Pages + 공개 저장소의 표준 GitHub Actions 실행기. 매시 50분 수집, API 키는 서버 Secret. 현재 Sites 주소는 개발자가 확인하는 비공개 테스트 배포로, 일반 대중 대상 출시 주소가 아니다. GitHub 연결과 공개 저장소 설정을 완료했고 https://wjdqls21c.github.io/kma-scorecard/ 에 테스트 앱을 배포했다. GitHub Pages는 실제 상거래 사이트 운영에 제한이 있으므로 광고·결제 도입 전 약관을 다시 검토하고 Cloudflare Workers 무료 플랜 등으로 이전한다.
    - https://docs.github.com/en/actions/concepts/billing-and-usage
    - https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
    - https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits
@@ -67,7 +67,7 @@ node --test tests/engine.test.mjs
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-수집은 서버 환경변수에 키를 등록한 환경에서 `python collector/collect.py`. 네트워크 없는 검사에 사용한 데이터는 명시적 합성 fixture다. API 실호출은 아직 검증하지 못했다.
+수집은 서버 환경변수에 키를 등록한 환경에서 `python collector/collect.py`. 네트워크 없는 검사에 사용한 데이터는 명시적 합성 fixture다. KMA API 인증 및 예보/실황 파싱과 최초 저장은 실호출로 확인했다. 장기간 가동 안정성과 평가 방법의 검증은 남아 있다.
 
 ## 구조와 보존
 
@@ -96,4 +96,4 @@ python -m unittest discover -s tests -p 'test_*.py'
 
 ## 알려진 한계
 
-Android 실기기 검사는 사용자 폰에서 수행해야 한다. 현재 브라우저 UI 및 계산/수집기 fixture 검사를 수행했다. PNG 아이콘을 포함했으나 Chrome 실제 설치 검증이 남아 있다. 오프라인에서 앱 셸은 열리지만 기상 자료를 임의로 오래된 캐시에서 제공하지 않는다. 폰트는 시스템 폰트를 사용하며 외부 폰트 서버로 요청하지 않는다. 연도별 통계·결제·광고·실제 자동수집은 미연결 상태다.
+Android 실기기 검사는 사용자 폰에서 수행해야 한다. 현재 브라우저 UI 및 계산/수집기 fixture 검사를 수행했다. PNG 아이콘을 포함했으나 Chrome 실제 설치 검증이 남아 있다. 오프라인에서 앱 셸은 열리지만 기상 자료를 임의로 오래된 캐시에서 제공하지 않는다. 폰트는 시스템 폰트를 사용하며 외부 폰트 서버로 요청하지 않는다. 실제 자동수집은 연결됐다. 연도별 통계·결제·광고는 미연결 상태다.
