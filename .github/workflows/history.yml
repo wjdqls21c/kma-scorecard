@@ -1,0 +1,26 @@
+name: Verify historical KMA availability
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'collector/history_probe.py'
+      - '.github/workflows/history.yml'
+permissions:
+  contents: read
+concurrency:
+  group: kma-data-writer
+  cancel-in-progress: false
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test 1, 2, 7 and 30 day archives (no keys logged)
+        env:
+          KMA_SERVICE_KEY: ${{ secrets.KMA_SERVICE_KEY }}
+        run: python collector/history_probe.py
