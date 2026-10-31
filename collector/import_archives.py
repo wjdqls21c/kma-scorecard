@@ -42,7 +42,12 @@ def parse_csv(raw,kind):
     for cells in csv.reader(lines[1:]):
         if not cells or not any(c.strip() for c in cells):continue
         cells=[c.strip() for c in cells]
-        if len(cells)!=(4 if forecast else 3):raise ValueError('Unexpected CSV columns')
+        if len(cells)==1 and re.fullmatch(r'Start\s*:\s*\d{8}',cells[0],re.I):
+            segment=dt.datetime.strptime(cells[0].split(':')[1].strip(),'%Y%m%d')
+            year,month,previous=segment.year,segment.month,None
+            continue
+        expected=4 if forecast else 3
+        if len(cells) not in (expected,expected+2):raise ValueError('Unexpected CSV columns')
         day=int(cells[0]);clock=cells[1].zfill(4)
         if len(clock)!=4 or not clock.isdigit():raise ValueError('Invalid clock')
         if previous is not None and day<previous:
@@ -52,6 +57,12 @@ def parse_csv(raw,kind):
         hour,minute=int(clock[:2]),int(clock[2:])
         if not 0<=hour<=23 or not 0<=minute<60:raise ValueError('Invalid UTC time')
         moment=dt.datetime(year,month,day,hour,minute,tzinfo=UTC)
+        if len(cells)==expected+2:
+            local=moment.astimezone(KST)
+            # Official exports sometimes print day+1 as 31/32 at month end.
+            # Build the calendar date from UTC, and verify this unrolled day too.
+            if int(cells[-2]) not in (local.day,day+(hour>=15)) or cells[-1].zfill(4)!=local.strftime('%H%M'):
+                raise ValueError('UTC and KST source columns disagree')
         if minute!=0:continue
         if forecast:
             lead=int(cells[2])

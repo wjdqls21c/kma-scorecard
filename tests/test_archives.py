@@ -3,9 +3,29 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import json
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'collector'))
 spec=importlib.util.spec_from_file_location('archives',ROOT/'collector/import_archives.py');a=importlib.util.module_from_spec(spec);spec.loader.exec_module(a)
 class ArchiveTests(unittest.TestCase):
+    def test_downloaded_format_kst_columns(self):
+        raw=b'format: day(UTC),hour(UTC),forecast,value,day(KST),hour(KST) location:71_121 Start:20260831\n31,2000,+24,10,1,0500\n1,0200,+24,11,1,1100\n'
+        rows=a.parse_csv(raw,'TMP');self.assertEqual(rows[0][1],'2026-09-01T05:00:00+09:00');self.assertEqual(rows[1][2],'2026-09-02T11:00:00+09:00')
+        with self.assertRaises(ValueError):a.parse_csv(raw.replace(b'1,0500',b'31,0500'),'TMP')
+        self.assertEqual(a.parse_csv(raw.replace(b'1,0500',b'32,0500'),'TMP')[0],rows[0])
+    def test_empty_download_not_observation(self):
+        with self.assertRaises(ValueError):a.parse_csv(b'format: day(UTC),hour(UTC),value,day(KST),hour(KST) location:60_127\n','T1H')
+    def test_daily_segment_resets_month(self):
+        raw=b'format: location:71_121 Start:20260831\n31,2000,+24,10\n Start : 20260901\n1,2000,+24,11\n'
+        self.assertEqual(a.parse_csv(raw,'TMP')[1][1],'2026-09-02T05:00:00+09:00')
+    def test_published_history_reproduces_official_csv(self):
+        folder=ROOT/'archive/history/2026-09'
+        rebuilt=a.build([folder/'forecasts.zip'],[folder/'observations.zip'])
+        published=json.loads((ROOT/'dist/history-2026-09.json').read_text())
+        end=published['period']['end']
+        self.assertEqual(rebuilt['sourceFiles'],published['sourceFiles'])
+        for kind,fields in [('forecasts',('region','issuedAt','validAt','temp','pop')),('observations',('region','validAt','temp','rainMm'))]:
+            rows=lambda data:sorted(tuple(r[k] for k in fields) for r in data[kind] if r['validAt']<=end)
+            self.assertEqual(rows(rebuilt),rows(published))
     def test_utc_and_24hour_lead(self):
         raw=b'format: day,hour,forecast,value location:71_121 Start : 20261031\n31,2000,+24,5\n31,2000,+23,7\n'
         rows=a.parse_csv(raw,'TMP');self.assertEqual(len(rows),1);self.assertEqual(rows[0][1],'2026-11-01T05:00:00+09:00');self.assertEqual(rows[0][2],'2026-11-02T05:00:00+09:00')
