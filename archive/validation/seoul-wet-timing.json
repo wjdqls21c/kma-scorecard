@@ -1,18 +1,22 @@
 {
-  "status": "partial-diagnostic-not-score-validation",
+  "status": "diagnostic-requests-complete-semantics-unresolved",
   "run": 41350604366,
   "checks": [
     {
       "target": "2026-09-01T11:00:00+09:00",
       "kind": "T1H",
       "offsetMinutes": 0,
-      "error": "URLError"
+      "expected": 22.9,
+      "actual": 22.9,
+      "match": true
     },
     {
       "target": "2026-09-01T11:00:00+09:00",
       "kind": "RN1",
       "offsetMinutes": 0,
-      "error": "URLError"
+      "expected": 3.5,
+      "actual": 5.9,
+      "match": false
     },
     {
       "target": "2026-09-01T11:00:00+09:00",
@@ -260,27 +264,32 @@
       "kind": "T1H",
       "offsetMinutes": 0,
       "n": 8,
-      "matches": 1
+      "matches": 2,
+      "errors": 0
     },
     {
       "kind": "T1H",
       "offsetMinutes": 50,
       "n": 8,
-      "matches": 8
+      "matches": 8,
+      "errors": 0
     },
     {
       "kind": "RN1",
       "offsetMinutes": 0,
       "n": 8,
-      "matches": 2
+      "matches": 2,
+      "errors": 0
     },
     {
       "kind": "RN1",
       "offsetMinutes": 50,
       "n": 8,
-      "matches": 8
+      "matches": 8,
+      "errors": 0
     }
   ],
   "interpretation": "All 8 CSV temperatures and 8 rain amounts match API +50 min. Two API offset=0 requests failed. This does not establish official time semantics.",
-  "next": "Retry 2026-09-01 11:00 T1H/RN1 at offset=0; confirm timestamp/accumulation definitions before scoring."
+  "next": "Do not shift score timestamps. Establish API publication time vs measured time and RN1 accumulation interval before scoring.",
+  "retryRun": 41351135770
 }

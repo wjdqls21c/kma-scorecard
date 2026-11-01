@@ -24,3 +24,14 @@ test('nationwide registry excludes metropolitan districts and preserves original
  for(const id of ['seoul','busan','yeoju'])assert.ok(REGIONS.some(r=>r.id===id));
  assert.ok(!REGIONS.some(r=>r.name.includes('강남구')||r.name.includes('도봉구')));assert.ok(REGIONS.some(r=>r.name==='수원'));assert.ok(REGIONS.some(r=>r.name==='양평군'));
 });
+
+test('temperature tolerance rates include boundaries and exclude missing values',()=>{
+ const rows=[0,1,-1,2,-2,3,null].map(error=>({temp:20,pop:0,observation:{temp:error===null?null:20-error,rainMm:null}}));
+ const m=metrics(rows);
+ assert.equal(m.n,6);assert.equal(m.within1,3);assert.equal(m.within2,5);
+ assert.equal(m.within1Rate,.5);assert.equal(m.within2Rate,5/6);
+});
+test('empty temperature sample has no invented success percentage',()=>{
+ const m=metrics([]);assert.equal(m.within1,0);assert.equal(m.within2,0);
+ assert.equal(m.within1Rate,null);assert.equal(m.within2Rate,null);
+});
