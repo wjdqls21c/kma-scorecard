@@ -23,4 +23,9 @@ class StorageTests(unittest.TestCase):
   rows=c.parse_forecast(items,'yeoju',base,now,71,121,retrospective=True)
   self.assertEqual(rows[0]['retrievalMode'],'retrospective-api')
   with self.assertRaises(ValueError):c.parse_forecast(items,'yeoju',base-dt.timedelta(hours=3),now,71,121,retrospective=True)
+ def test_current_observation_waits_for_publication_margin(self):
+  early=dt.datetime(2026,11,1,14,30,tzinfo=c.KST);late=early.replace(minute=50)
+  self.assertEqual([t.hour for t in c.observation_slots(early)],[11,8])
+  self.assertEqual([t.hour for t in c.observation_slots(late)],[14,11,8])
 if __name__=='__main__':unittest.main()
+

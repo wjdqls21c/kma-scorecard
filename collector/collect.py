@@ -125,6 +125,14 @@ def save_daily(root,forecasts,observations):
             prior[kind]=sorted(rows.values(),key=key)
         write(path,prior)
 
+def observation_slots(now):
+    slots=[]
+    for back in range(7):
+        if back==0 and now.minute<40:continue
+        valid=(now-dt.timedelta(hours=back)).replace(minute=0,second=0,microsecond=0)
+        if valid.hour in (2,5,8,11,14,17,20,23):slots.append(valid)
+    return slots
+
 def main():
     global _deadline
     key=os.environ.get('KMA_SERVICE_KEY','').strip()
@@ -157,9 +165,7 @@ def main():
             except Exception:
                 errors+=1;print(region+': '+('historical' if retro else 'current')+' forecast unavailable (credential details suppressed)')
         # Only the eight daily evaluation slots need observations.
-        for back in range(1,7):
-            valid=(now-dt.timedelta(hours=back)).replace(minute=0,second=0,microsecond=0)
-            if valid.hour not in (2,5,8,11,14,17,20,23):continue
+        for valid in observation_slots(now):
             k=(region,stamp(valid))
             if k in obs and obs[k]['temp'] is not None and obs[k]['rainMm'] is not None:continue
             try:
