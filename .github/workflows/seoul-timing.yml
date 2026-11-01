@@ -1,0 +1,26 @@
+name: Diagnose Seoul observation timing
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['collector/diagnose_seoul_timing.py', '.github/workflows/seoul-timing.yml']
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare nearby ten-minute observations
+        env:
+          KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
+        run: python collector/diagnose_seoul_timing.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seoul-timing
+          path: seoul-timing/
