@@ -1,4 +1,4 @@
-import{test}from'node:test';import assert from'node:assert/strict';import{validate,pairs,metrics,demo,REGIONS}from'../dist/engine.mjs';
+import{test}from'node:test';import assert from'node:assert/strict';import{validate,pairs,metrics,demo,REGIONS,timingAssessment}from'../dist/engine.mjs';
 const now=Date.parse('2026-11-01T12:00:00+09:00'),f={region:'yeoju',issuedAt:'2026-10-30T11:00:00+09:00',validAt:'2026-10-31T11:00:00+09:00',temp:20,pop:80},o={region:'yeoju',validAt:f.validAt,temp:18,rainMm:1};const data=()=>({schemaVersion:1,forecasts:[{...f}],observations:[{...o}]});
 test('known MAE, bias and Brier; wet event hit',()=>{const m=metrics(pairs(validate(data()),'yeoju',now));assert.equal(m.mae,2);assert.equal(m.bias,2);assert.ok(Math.abs(m.brier-.04)<1e-10);assert.equal(m.hit,1)});
 test('missing observations and separate missing measurements excluded',()=>{const d=data();d.observations[0].rainMm=null;let m=metrics(pairs(d,'yeoju',now));assert.equal(m.n,1);assert.equal(m.rainN,0);assert.equal(m.brier,null);d.observations=[];assert.equal(pairs(d,'yeoju',now).length,0)});
@@ -34,4 +34,11 @@ test('temperature tolerance rates include boundaries and exclude missing values'
 test('empty temperature sample has no invented success percentage',()=>{
  const m=metrics([]);assert.equal(m.within1,0);assert.equal(m.within2,0);
  assert.equal(m.within1Rate,null);assert.equal(m.within2Rate,null);
+});
+
+test('timing policy handles exact boundaries, sign and unknown evidence',()=>{
+ for(const m of [0,50,60,-60])assert.equal(timingAssessment(m).status,'within');
+ for(const m of [60.01,90,-119.9])assert.equal(timingAssessment(m).status,'borderline');
+ for(const m of [120,180,-120])assert.equal(timingAssessment(m).status,'warning');
+ for(const m of [null,undefined,NaN,Infinity,'50'])assert.equal(timingAssessment(m).status,'unknown');
 });
