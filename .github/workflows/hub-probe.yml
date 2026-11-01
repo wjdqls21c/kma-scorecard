@@ -1,0 +1,29 @@
+name: Verify APIhub historical grids
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'collector/hub_probe.py'
+      - '.github/workflows/hub-probe.yml'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe August 2026 original forecast and observed grids
+        env:
+          KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
+        run: python collector/hub_probe.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hub-archive-probe
+          path: hub-probe/
+          retention-days: 7
