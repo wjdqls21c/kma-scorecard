@@ -58,3 +58,14 @@ collector/diagnose_seoul_timing.py. 진단일 뿐 일치하는 시각을 임의�
 공식 2025-05-16 자료 안내에서 CSV UTC 및 AWS 매칭 10분 자료임을 재확인.
 https://data.kma.go.kr/community/nuriLovePopup.do
 실행 결과 확인 후 다음 체크포인트 갱신 필요.
+
+## 최신 진단 결과
+run 41321606884 완료. 16회 호출 성공.
+9/10 02시 CSV17.200001은 API02:50의17.2와 일치.
+9/20 14시 CSV30.0은 API14:50의30.0과 일치.
+두 사례 모두 +50분 일치. 시각/집계 의미 차이 후보이며 원인 확정 아님.
+전 기간에 50분 이동 적용 금지. 추가 시각 및 강수 사례 검증 필요.
+report: archive/validation/seoul-timing.json.
+현재 정기 수집 작업과의 main 충돌 방지를 위해 결과는 별도 seoul-validation-checkpoint 브랜치에 저장.
+다음 재개: main 최신 상태와 이 브랜치 PROGRESS를 확인해 결과 기록을 main에 통합.
+이전 진단 코드 저장 시점과 정기 수집이 겹쳤으므로 run41321404935의 저장 단계 결과도 확인할 것.
