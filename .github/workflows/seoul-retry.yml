@@ -1,0 +1,26 @@
+name: Complete Seoul missing observations
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['collector/retry_seoul_missing.py', '.github/workflows/seoul-retry.yml']
+permissions:
+  contents: read
+jobs:
+  retry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retry only the two missing grid responses
+        env:
+          KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
+        run: python collector/retry_seoul_missing.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seoul-retry
+          path: seoul-retry/
