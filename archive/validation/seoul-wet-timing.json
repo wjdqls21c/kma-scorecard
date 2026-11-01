@@ -1,0 +1,286 @@
+{
+  "status": "partial-diagnostic-not-score-validation",
+  "run": 41350604366,
+  "checks": [
+    {
+      "target": "2026-09-01T11:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "error": "URLError"
+    },
+    {
+      "target": "2026-09-01T11:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "error": "URLError"
+    },
+    {
+      "target": "2026-09-01T11:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 22.9,
+      "actual": 22.9,
+      "match": true
+    },
+    {
+      "target": "2026-09-01T11:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 3.5,
+      "actual": 3.5,
+      "match": true
+    },
+    {
+      "target": "2026-09-01T17:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 22.200001,
+      "actual": 22.5,
+      "match": false
+    },
+    {
+      "target": "2026-09-01T17:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 0.3,
+      "actual": 0.4,
+      "match": false
+    },
+    {
+      "target": "2026-09-01T17:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 22.200001,
+      "actual": 22.2,
+      "match": true
+    },
+    {
+      "target": "2026-09-01T17:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 0.3,
+      "actual": 0.3,
+      "match": true
+    },
+    {
+      "target": "2026-09-01T20:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 22,
+      "actual": 22,
+      "match": true
+    },
+    {
+      "target": "2026-09-01T20:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 0.6,
+      "actual": 0.4,
+      "match": false
+    },
+    {
+      "target": "2026-09-01T20:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 22,
+      "actual": 22,
+      "match": true
+    },
+    {
+      "target": "2026-09-01T20:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 0.6,
+      "actual": 0.6,
+      "match": true
+    },
+    {
+      "target": "2026-09-13T08:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 18.9,
+      "actual": 18.5,
+      "match": false
+    },
+    {
+      "target": "2026-09-13T08:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 0.1,
+      "actual": 0,
+      "match": false
+    },
+    {
+      "target": "2026-09-13T08:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 18.9,
+      "actual": 18.9,
+      "match": true
+    },
+    {
+      "target": "2026-09-13T08:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 0.1,
+      "actual": 0.1,
+      "match": true
+    },
+    {
+      "target": "2026-09-25T14:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 21.200001,
+      "actual": 22.1,
+      "match": false
+    },
+    {
+      "target": "2026-09-25T14:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 1.9,
+      "actual": 0.3,
+      "match": false
+    },
+    {
+      "target": "2026-09-25T14:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 21.200001,
+      "actual": 21.2,
+      "match": true
+    },
+    {
+      "target": "2026-09-25T14:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 1.9,
+      "actual": 1.9,
+      "match": true
+    },
+    {
+      "target": "2026-09-25T17:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 19.6,
+      "actual": 20,
+      "match": false
+    },
+    {
+      "target": "2026-09-25T17:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 0.2,
+      "actual": 0.5,
+      "match": false
+    },
+    {
+      "target": "2026-09-25T17:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 19.6,
+      "actual": 19.6,
+      "match": true
+    },
+    {
+      "target": "2026-09-25T17:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 0.2,
+      "actual": 0.2,
+      "match": true
+    },
+    {
+      "target": "2026-09-10T02:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 17.200001,
+      "actual": 17.4,
+      "match": false
+    },
+    {
+      "target": "2026-09-10T02:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 0,
+      "actual": 0,
+      "match": true
+    },
+    {
+      "target": "2026-09-10T02:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 17.200001,
+      "actual": 17.2,
+      "match": true
+    },
+    {
+      "target": "2026-09-10T02:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 0,
+      "actual": 0,
+      "match": true
+    },
+    {
+      "target": "2026-09-20T14:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "expected": 30,
+      "actual": 29.2,
+      "match": false
+    },
+    {
+      "target": "2026-09-20T14:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "expected": 0,
+      "actual": 0,
+      "match": true
+    },
+    {
+      "target": "2026-09-20T14:00:00+09:00",
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "expected": 30,
+      "actual": 30,
+      "match": true
+    },
+    {
+      "target": "2026-09-20T14:00:00+09:00",
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "expected": 0,
+      "actual": 0,
+      "match": true
+    }
+  ],
+  "summary": [
+    {
+      "kind": "T1H",
+      "offsetMinutes": 0,
+      "n": 8,
+      "matches": 1
+    },
+    {
+      "kind": "T1H",
+      "offsetMinutes": 50,
+      "n": 8,
+      "matches": 8
+    },
+    {
+      "kind": "RN1",
+      "offsetMinutes": 0,
+      "n": 8,
+      "matches": 2
+    },
+    {
+      "kind": "RN1",
+      "offsetMinutes": 50,
+      "n": 8,
+      "matches": 8
+    }
+  ],
+  "interpretation": "All 8 CSV temperatures and 8 rain amounts match API +50 min. Two API offset=0 requests failed. This does not establish official time semantics.",
+  "next": "Retry 2026-09-01 11:00 T1H/RN1 at offset=0; confirm timestamp/accumulation definitions before scoring."
+}
