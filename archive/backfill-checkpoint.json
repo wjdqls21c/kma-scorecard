@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "stage": "historical-backfill-seoul-2026-08",
+  "status": "blocked-web-session-not-retained",
+  "target": {
+    "region": "seoul",
+    "grid": [
+      60,
+      127
+    ],
+    "month": "2026-08",
+    "forecastQueryUtc": {
+      "from": "20260730",
+      "to": "20260831"
+    },
+    "observationQueryUtc": {
+      "from": "202607",
+      "to": "202608"
+    }
+  },
+  "completed": [
+    "Confirmed signed-in header after user login",
+    "Selected Seoul Cheongunhyoja-dong TMP and POP",
+    "Verified forecast query returned two requested rows"
+  ],
+  "notCompleted": [
+    "No new historical ZIP confirmed downloaded",
+    "No August observations downloaded",
+    "No August score published"
+  ],
+  "blocker": "Download opened a login modal despite signed-in header; one reload returned logged-out header. Stop repetitive retries.",
+  "nextStep": "Resolve web session persistence only, then download Seoul August sources in a separate bounded stage.",
+  "batchPolicy": "User requested short, separate stages. Do not start nationwide or multi-year batches in one turn."
+}
