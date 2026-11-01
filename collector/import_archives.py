@@ -9,9 +9,10 @@ import hashlib
 from pathlib import Path
 import re
 import zipfile
-from collect import KST,numeric,stamp,write
+from collect import KST,numeric,stamp,write,REGIONS
 UTC=dt.timezone.utc
-GRIDS={(71,121):'yeoju',(60,127):'seoul',(98,76):'busan'}
+GRIDS={}
+for rid,nx,ny in REGIONS:GRIDS.setdefault((nx,ny),[]).append(rid)
 
 def decode(raw):
     for encoding in ('utf-8-sig','cp949'):
@@ -71,12 +72,12 @@ def parse_csv(raw,kind):
             if issued.astimezone(KST).hour not in (2,5,8,11,14,17,20,23):raise ValueError('Unexpected issue hour after UTC conversion')
             value=numeric(cells[3],0,100) if kind=='POP' else numeric(cells[3],-90,65)
             if value is None:continue
-            out.append((GRIDS[(nx,ny)],stamp(issued),stamp(valid),value))
+            out.extend((rid,stamp(issued),stamp(valid),value) for rid in GRIDS[(nx,ny)])
         else:
             value=numeric(cells[2],0,1000) if kind=='RN1' else numeric(cells[2],-90,65)
             # Invalid values are omitted, never converted into zero rain.
             if value is None:continue
-            out.append((GRIDS[(nx,ny)],stamp(moment),value))
+            out.extend((rid,stamp(moment),value) for rid in GRIDS[(nx,ny)])
     return out
 
 def files(path):

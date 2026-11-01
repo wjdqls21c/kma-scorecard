@@ -3,3 +3,5 @@
 #status.demo{position:sticky;top:10px;z-index:5;box-shadow:0 4px 12px #193c3410}
 
 .period-selector{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:18px 0 10px}.period-selector label{font-size:12px;font-weight:700}.period-selector select{max-width:100%}
+
+.selector input{min-width:0;width:100%;padding:10px 12px;border:1px solid #c9d1c4;border-radius:8px;background:white;color:var(--ink);font:inherit;box-sizing:border-box}.selector small{font-size:10px;color:var(--muted)}
