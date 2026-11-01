@@ -1,0 +1,26 @@
+name: Validate Seoul against official CSV
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['collector/validate_seoul.py', '.github/workflows/seoul-validation.yml']
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compare Seoul at two archived timestamps
+        env:
+          KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
+        run: python collector/validate_seoul.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seoul-validation
+          path: seoul-validation/
