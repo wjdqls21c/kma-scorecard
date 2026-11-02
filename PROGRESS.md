@@ -191,3 +191,7 @@ Python월경계/누락차단/출처검사2테스트,Node11테스트통과.
 ## 서울 2026-08 API 자료 수집 완료
 {"region": "seoul", "month": "2026-08", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
 248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
+
+## 서울 2026-07 API 자료 수집 완료
+{"region": "seoul", "month": "2026-07", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
+248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
