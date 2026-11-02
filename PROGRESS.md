@@ -164,3 +164,19 @@ API호출수/응답본문 바이트 실측; ChatGPT 사용량 잔여한도는 �
 ## 서울 2026년10월 API 자료 수집 완료
 {"region": "seoul", "month": "2026-10", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
 248개 시각의24시간전 예보, 실황은 API요청 정각기준 독립 자료셋. 시각 의미 및 강수 구간 한계는 실험 상태.
+
+## 서울10월 최종 수집·배포·화면 확인 완료
+2026-11-02 KST. 수집run41381312577 성공(약7분30초), 배포run41382030287 성공.
+31날짜 체크포인트, 원천응답992개, 실패0.
+실측992호출/338,566,624 bytes 응답본문. 계정전체API사용량 및ChatGPT토큰사용량은 아님.
+독립검사:248예보/248실황,31날짜,대상시각중복0,예측간격24시간 전부일치,기온/강수실황누락0.
+게시자료 50574bytes. 전국응답은폐기하고서울값/원응답sha256저장.
+기온MAE1.0709677419354835℃,편향-0.31048387096774227℃,
+±1℃148/248(59.7%),±2℃218/248(87.9%).
+브라우저 서울→2026년10월API정각기준 선택,248/248및수치확인.
+Python월경계/누락차단/출처검사2테스트,Node11테스트통과.
+강수hit8/miss2/falseAlarm5/correctDry233. 누적구간정합성 미확정 실험지표 유지.
+완료범위는수집/형식/출처/시간간격/계산/화면. 공식측정시각의미확정은아님.
+기존CSV혼합/50분보정없음. 10월시간차이판정은미확인표시.
+다음:수집기월별일반화/재개보완,다중예측시간자료,강수구간확인,모바일점검/source.zip갱신.
+요청한서울10월범위는수집및실험성적표게시완료.
