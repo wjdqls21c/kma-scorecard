@@ -160,3 +160,7 @@ Publish Pages41361946399 성공, CI41361946477 성공.
 완전한31일 및 248쌍 확인 전 성적표 게시 금지. 재실행은 저장한 응답 재사용.
 API호출수/응답본문 바이트 실측; ChatGPT 사용량 잔여한도는 조회 불가.
 로컬 월경계/24시간/누락날짜 차단/출처검사 테스트 통과. 실제수집·배포 대기.
+
+## 서울 2026년10월 API 자료 수집 완료
+{"region": "seoul", "month": "2026-10", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
+248개 시각의24시간전 예보, 실황은 API요청 정각기준 독립 자료셋. 시각 의미 및 강수 구간 한계는 실험 상태.
