@@ -1,0 +1,60 @@
+name: Collect Seoul October 2026
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['collector/seoul_october.py', '.github/workflows/seoul-october.yml']
+permissions:
+  contents: write
+concurrency:
+  group: seoul-october-backfill
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Resume saved dates on isolated data branch
+        run: |
+          git config user.name "kma-scorecard-bot"
+          git config user.email "kma-scorecard-bot@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin seoul-october-2026-data >/dev/null; then
+            git fetch origin seoul-october-2026-data
+            git checkout origin/seoul-october-2026-data -- archive/hub/seoul/2026-10
+          fi
+          git checkout -B seoul-october-2026-data
+      - name: Collect dates with checkpoints and measured usage
+        env:
+          KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
+          GITHUB_ACTIONS: 'true'
+        run: python collector/seoul_october.py
+      - name: Publish only a complete verified month
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          git checkout seoul-october-2026-data -- archive/hub/seoul/2026-10
+          python collector/seoul_october.py --publish
+          node --input-type=module -e "import fs from 'node:fs'; import {validate,pairs,metrics} from './dist/engine.mjs'; const d=validate(JSON.parse(fs.readFileSync('dist/history/2026-10-api/seoul.json'))); const r=pairs(d,'seoul',Date.parse(d.period.end),31); if(r.length!==248)throw Error('Coverage'); console.log('METRICS '+JSON.stringify(metrics(r)));"
+          node --test tests/engine.test.mjs
+          git add archive/hub/seoul/2026-10 dist/history/2026-10-api dist/history-index.json dist/usage-seoul-2026-10.json PROGRESS.md
+          git commit -m "Publish Seoul October API scores and measured collection usage"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin main; then exit 0; fi
+          done
+          exit 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seoul-october-checkpoints
+          path: archive/hub/seoul/2026-10/
+          retention-days: 30
