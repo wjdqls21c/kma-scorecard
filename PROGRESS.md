@@ -195,3 +195,17 @@ Python월경계/누락차단/출처검사2테스트,Node11테스트통과.
 ## 서울 2026-07 API 자료 수집 완료
 {"region": "seoul", "month": "2026-07", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
 248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
+
+## 서울7·8월 완료 및 배포 확인
+수집run41383173757 성공, 배포41384680293 성공. 전체실행약17분.
+각월31일248예보/248실황,대상시각중복0,24시간간격일치,기온/강수실황누락0.
+각992호출/338,566,624 bytes/실패0, 합계1984호출/677,133,248 bytes.
+7월MAE1.0020161290322582℃,±1℃159/248(64.1%),±2℃223/248(89.9%).
+8월MAE1.0822580645161284℃,±1℃155/248(62.5%),±2℃213/248(85.9%).
+브라우저7월/8월선택,표본248/248및계산값표시확인. 기존10월/9월목록보존.
+수집·형식·월경계·출처·중복·결측·계산·화면검증완료. 시각의미/강수누적정합성은실험상태유지.
+재개워크플로보완:기존데이터브랜치계보를보존하고실행코드만갱신해재개,강제푸시없음.
+로컬Git재개통합테스트및워크플로셸구문검사통과. 완료된일자재호출하지않는캐시테스트통과.
+새워크플로로다시대량수집하지않도록최종기록커밋은skip-ci.
+9월은기존CSV2026-09-01 09시~10-01 08시240표본이며API동일기준의9월전체는아님.
+다음:추가월/다중예측시점확장,9월API기준통일검토,강수누적구간검증,source.zip갱신.

@@ -36,11 +36,14 @@ jobs:
           git config user.email "kma-scorecard-bot@users.noreply.github.com"
           data_branch="seoul-${TARGET_MONTH}-data"
           data_path="archive/hub/seoul/${TARGET_MONTH}"
+          source_sha=$(git rev-parse HEAD)
           if git ls-remote --exit-code --heads origin "$data_branch" >/dev/null; then
             git fetch origin "$data_branch"
-            git checkout "origin/$data_branch" -- "$data_path"
+            git checkout -B "$data_branch" "origin/$data_branch"
+            git checkout "$source_sha" -- collector/seoul_month.py collector/validate_seoul.py
+          else
+            git checkout -B "$data_branch"
           fi
-          git checkout -B "$data_branch"
       - name: Collect dates and save each checkpoint
         env:
           KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
