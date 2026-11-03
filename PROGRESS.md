@@ -1,5 +1,5 @@
 # 기상청 성적표 진행 기록
-최종 갱신: 2026-11-02 KST
+최종 갱신: 2026-11-03 KST
 
 ## 작업 원칙
 재개 시 기존 코드와 이 파일을 먼저 확인한다. 검증된 단위별로 저장한다.
@@ -235,6 +235,27 @@ git저장3회재시도,지속실패시수집을중단하지않고파일/artifact
 {"region": "seoul", "month": "2026-05", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters.", "Usage counts cover persisted checkpoints only; the interrupted prior run may have unrecorded attempts."], "recoverySourceRun": 41562542364, "usageComplete": false}
 248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
 
-## 서울 2026-05 API 자료 수집 완료
-{"region": "seoul", "month": "2026-05", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters.", "Usage counts cover persisted checkpoints only; the interrupted prior run may have unrecorded attempts."], "recoverySourceRun": 41562542364, "usageComplete": false}
-248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
+## 서울5·6월 최종 검증·배포 완료 (2026-11-03 KST)
+6월: run41562542364의 해당 월 작업 성공. 30일240예보/240실황.
+5월: 저장 실패 후 복구run41564387742 성공, 후속 캐시 재개run41564488610도 성공.
+최종 Pages 배포run41564969009 성공.
+독립 재계산: 대상시각 중복0, 해당 월 이탈0, 모든 예측간격24시간,
+기온/강수실황 결측0, 강수확률0~100 범위 확인.
+5월 MAE0.8814516129032263℃, ±1℃167/248(67.3%), ±2℃224/248(90.3%).
+6월 MAE0.9854166666666665℃, ±1℃153/240, ±2℃211/240(87.9%).
+6월 ±1℃ 정확한 비율은63.75%; 현재 화면의 부동소수점 toFixed(1) 표시는63.7%.
+브라우저 서울→6월 및5월 선택하여 각각240/240,248/248 및 계산값 확인.
+5월 API호출 전 월별2테스트/저장재시도2테스트 성공, 게시 후 Node11테스트 모두 성공.
+저장재시도 테스트 로그의 CHECKPOINT_PUSH_RETRY/DEFERRED는 의도된 모의 실패 출력이므로
+그 자체를 실수집 중 push 재실패 증거로 해석하지 않는다.
+6월960호출/327,645,120 bytes/기록된 API실패0.
+5월 보존 체크포인트992호출/338,566,624 bytes/기록된 API실패0.
+5월 중단 전 미저장 요청이 있었을 수 있어 전체 실제 사용량은 이 수치보다 클 수 있음.
+usageComplete=false 유지. 두 달 합계를 실제 총호출량이라고 보고하지 않는다.
+일자별 체크포인트/출처 인자/응답 sha256 및 앱 파일은 GitHub에 저장.
+기존7·8·10월 및9월CSV 목록 보존. 9월은 동일 API 기준 전체 월 자료가 아님.
+완료 범위는 서울5·6월 하루8시각의24시간전 예보 수집/계산/게시 검증.
+모든 시간대·모든 예측간격을 수집했다는 뜻이 아님.
+시각의미 및 강수 누적구간 한계는 실험 상태 유지. 시간 이동 보정 없음.
+다음 작업: 추가 월은 별도 요청 범위로 진행,9월 API 기준 통일 검토,
+다중 예측시간 자료와 계획 확정 시계,강수 누적구간 검증,source.zip 갱신.
