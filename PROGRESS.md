@@ -230,3 +230,7 @@ git저장3회재시도,지속실패시수집을중단하지않고파일/artifact
 복구작업은5월만진행하며6월재수집없음。
 이전실패実行에서메모리에만있던API응답이있을수있어총호출량완전실측불가.
 복구후usage는보존된체크포인트기준이며usageComplete=false명시.
+
+## 서울 2026-05 API 자료 수집 완료
+{"region": "seoul", "month": "2026-05", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters.", "Usage counts cover persisted checkpoints only; the interrupted prior run may have unrecorded attempts."], "recoverySourceRun": 41562542364, "usageComplete": false}
+248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
