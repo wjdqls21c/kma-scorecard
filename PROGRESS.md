@@ -217,3 +217,7 @@ Python월경계/누락차단/출처검사2테스트,Node11테스트통과.
 예상총1952호출/약666MB. 실제수신/실패/날짜별저장기록측정.
 기존9월CSV와혼합하거나50분보정하지않는API정각기준. 강수구간은실험한계표시유지.
 현재설정저장단계. 실제수집/완료검증/배포결과는추가확인필요.
+
+## 서울 2026-06 API 자료 수집 완료
+{"region": "seoul", "month": "2026-06", "expectedDates": 30, "completeDates": 30, "responses": 960, "attempts": 960, "receivedBytes": 327645120, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
+240개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
