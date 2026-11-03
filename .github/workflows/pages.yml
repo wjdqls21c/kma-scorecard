@@ -29,6 +29,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify forecast interpretation before deployment
+        run: |
+          node --check dist/app.mjs
+          node --check dist/outlook.mjs
+          node --test tests/*.test.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
