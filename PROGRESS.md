@@ -221,3 +221,12 @@ Python월경계/누락차단/출처검사2테스트,Node11테스트통과.
 ## 서울 2026-06 API 자료 수집 완료
 {"region": "seoul", "month": "2026-06", "expectedDates": 30, "completeDates": 30, "responses": 960, "attempts": 960, "receivedBytes": 327645120, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
 240개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
+
+## 5월 저장오류 복구
+run41562542364:6월성공,5월git push실패로중단. API오류라고단정하지않음.
+5월원격13날짜및실패작업artifact13198168443을병합해재사용.
+git저장3회재시도,지속실패시수집을중단하지않고파일/artifact보존하도록래퍼추가.
+재시도/실패비전파테스트를새작업의API호출전에실행.
+복구작업은5월만진행하며6월재수집없음。
+이전실패実行에서메모리에만있던API응답이있을수있어총호출량완전실측불가.
+복구후usage는보존된체크포인트기준이며usageComplete=false명시.

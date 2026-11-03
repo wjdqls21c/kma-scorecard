@@ -7,7 +7,7 @@ on:
       - ".github/workflows/pages.yml"
   workflow_dispatch:
   workflow_run:
-    workflows: ['Collect KMA snapshots', 'Collect Seoul October 2026', 'Collect Seoul July and August 2026', 'Collect Seoul May and June 2026']
+    workflows: ['Collect KMA snapshots', 'Collect Seoul October 2026', 'Collect Seoul July and August 2026', 'Collect Seoul May and June 2026', 'Recover Seoul May 2026']
     types: [completed]
     branches: [main]
 permissions:
