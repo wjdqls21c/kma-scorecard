@@ -234,3 +234,7 @@ git저장3회재시도,지속실패시수집을중단하지않고파일/artifact
 ## 서울 2026-05 API 자료 수집 완료
 {"region": "seoul", "month": "2026-05", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters.", "Usage counts cover persisted checkpoints only; the interrupted prior run may have unrecorded attempts."], "recoverySourceRun": 41562542364, "usageComplete": false}
 248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
+
+## 서울 2026-05 API 자료 수집 완료
+{"region": "seoul", "month": "2026-05", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters.", "Usage counts cover persisted checkpoints only; the interrupted prior run may have unrecorded attempts."], "recoverySourceRun": 41562542364, "usageComplete": false}
+248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
