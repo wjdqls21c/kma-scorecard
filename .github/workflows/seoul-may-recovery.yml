@@ -6,6 +6,7 @@ on:
     paths: ['.github/workflows/seoul-may-recovery.yml']
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: seoul-may-recovery
   cancel-in-progress: false
