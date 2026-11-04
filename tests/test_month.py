@@ -5,7 +5,7 @@ import seoul_month as m
 class MonthTests(unittest.TestCase):
     def tearDown(self):m.configure("2026-10")
     def test_calendar_and_rollover(self):
-        for month,days in (("2026-05",31),("2026-06",30),("2026-07",31),("2026-08",31),("2026-02",28)):
+        for month,days in (("2026-03",31),("2026-04",30),("2026-05",31),("2026-06",30),("2026-07",31),("2026-08",31),("2026-02",28)):
             m.configure(month)
             rows=[r for d in range(1,m.DAYS+1) for r in m.requests_for_day(d)]
             self.assertEqual(len(rows),days*32)

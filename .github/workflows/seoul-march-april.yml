@@ -1,0 +1,77 @@
+name: Collect Seoul March and April 2026
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/seoul-march-april.yml']
+permissions:
+  contents: write
+concurrency:
+  group: seoul-march-april-backfill
+  cancel-in-progress: false
+jobs:
+  collect:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        month: ['2026-04', '2026-03']
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TARGET_MONTH: ${{ matrix.month }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify month boundaries before collection
+        run: |
+          python -m unittest discover -s tests -p test_month.py
+          python -m unittest discover -s tests -p test_checkpoint_retry.py
+      - name: Resume this month's completed requests
+        run: |
+          git config user.name "kma-scorecard-bot"
+          git config user.email "kma-scorecard-bot@users.noreply.github.com"
+          data_branch="seoul-${TARGET_MONTH}-data"
+          data_path="archive/hub/seoul/${TARGET_MONTH}"
+          source_sha=$(git rev-parse HEAD)
+          if git ls-remote --exit-code --heads origin "$data_branch" >/dev/null; then
+            git fetch origin "$data_branch"
+            git checkout -B "$data_branch" "origin/$data_branch"
+            git checkout "$source_sha" -- collector/seoul_month.py collector/validate_seoul.py collector/seoul_month_recovery.py collector/seoul_spring.py
+          else
+            git checkout -B "$data_branch"
+          fi
+      - name: Collect dates and save each checkpoint
+        env:
+          KMA_HUB_AUTH_KEY: ${{ secrets.KMA_HUB_AUTH_KEY }}
+        run: python collector/seoul_spring.py --month "$TARGET_MONTH"
+      - name: Verify and publish this complete month
+        run: |
+          data_branch="seoul-${TARGET_MONTH}-data"
+          data_path="archive/hub/seoul/${TARGET_MONTH}"
+          git fetch origin main
+          git checkout -B main origin/main
+          git checkout "$data_branch" -- "$data_path"
+          python collector/seoul_month.py --month "$TARGET_MONTH" --publish
+          node --input-type=module -e "import fs from 'node:fs'; import {validate,pairs,metrics} from './dist/engine.mjs'; const d=validate(JSON.parse(fs.readFileSync('dist/history/'+process.env.TARGET_MONTH+'-api/seoul.json'))); const r=pairs(d,'seoul',Date.parse(d.period.end),d.period.days); if(r.length!==d.period.days*8)throw Error('Coverage'); console.log('METRICS '+process.env.TARGET_MONTH+' '+JSON.stringify(metrics(r)));"
+          node --test tests/*.test.mjs
+          git add "$data_path" "dist/history/${TARGET_MONTH}-api" dist/history-index.json "dist/usage-seoul-${TARGET_MONTH}.json" PROGRESS.md
+          git commit -m "Publish Seoul ${TARGET_MONTH} API scores and measured usage"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin main; then exit 0; fi
+          done
+          exit 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seoul-${{ matrix.month }}-checkpoints
+          path: archive/hub/seoul/${{ matrix.month }}/
+          retention-days: 30
