@@ -299,3 +299,7 @@ CI run41571080556 성공, Pages run41571080649 성공(배포 전 Node 검증 포
 이번 새수집에5월복구용usageComplete=false를 부당하게 적용하지 않음.
 API호출전3·4월 포함 월경계/재시도 테스트. 완전한 월 및 출처검사 후에만 게시.
 완료대기. 예측간격 확대/생활판단 UI는 이번 두달 추가와 별도 미완료 작업.
+
+## 서울 2026-04 API 자료 수집 완료
+{"region": "seoul", "month": "2026-04", "expectedDates": 30, "completeDates": 30, "responses": 960, "attempts": 960, "receivedBytes": 327645120, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
+240개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
