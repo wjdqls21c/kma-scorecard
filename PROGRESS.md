@@ -1,5 +1,5 @@
 # 기상청 성적표 진행 기록
-최종 갱신: 2026-11-03 KST
+최종 갱신: 2026-11-04 KST
 
 ## 작업 원칙
 재개 시 기존 코드와 이 파일을 먼저 확인한다. 검증된 단위별로 저장한다.
@@ -307,3 +307,21 @@ API호출전3·4월 포함 월경계/재시도 테스트. 완전한 월 및 출�
 ## 서울 2026-03 API 자료 수집 완료
 {"region": "seoul", "month": "2026-03", "expectedDates": 31, "completeDates": 31, "responses": 992, "attempts": 992, "receivedBytes": 338566624, "failedAttempts": 0, "grid": [60, 127], "observationOffsetMinutes": 0, "methodStatus": "experimental-api-publication-time", "limitations": ["API tmfc publication timestamp used as requested; no +50 minute adjustment.", "RN1 accumulation alignment remains experimental.", "Received bytes measure HTTP response bodies, not provider billing counters."]}
 248개 시각의24시간전 예보. API정각기준 독립자료셋, 시각의미/강수구간은 실험상태.
+
+## 서울3·4월 수집·검증·배포 완료 (2026-11-04 KST)
+수집run41758071339 성공(4월→3월 순차), CI41758071200 성공, Pages41760132118 성공.
+4월30일240예보/240실황;3월31일248예보/248실황. 합계61일488쌍.
+독립검사:각월전체날짜,중복0,대상시각월이탈0,24h간격모두일치,
+기온/강수실황누락0,수치유한성/강수확률0~100 확인.
+4월 MAE0.9741666666666665℃,±1℃148/240(61.7%),±2℃212/240(88.3%).
+3월 MAE1.0620967741935474℃,±1℃130/248(52.4%),±2℃233/248(94.0%).
+4월960호출/327,645,120 bytes/실패0;3월992호출/338,566,624 bytes/실패0.
+합계1952호출/666,211,744 bytes. 응답본문실측이며계정전체사용량·ChatGPT사용량아님.
+월별API호출전월경계2테스트/저장재시도2테스트 통과;각월게시전Node14테스트통과.
+일자별체크포인트 seoul-2026-04-data / seoul-2026-03-data 보존,main앱파일/원천출처기록저장.
+과거목록8기간보존:3·4·5·6·7·8·10월API와기존9월CSV고정구간.
+브라우저초기화2회시간초과로이번실화면선택검증미실시. 데이터/계산/배포검증완료와구분.
+이번범위는24h기준과거2개월추가이며다중예측시간/생활판단기능완료가아님.
+강수누적구간/시각의미의실험상태유지,CSV혼합·50분이동없음.
+다음:서울6·12·24·48·72h과거예보확보검증,오차분포를생활판단에연결,
+이번두달실화면확인,강수누적구간검증,source.zip갱신.
